@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Payment Riiwwxz - JB | Lampu Hijau Transfer</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', 'Poppins', system-ui, -apple-system, 'Inter', sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      background: radial-gradient(circle at 20% 30%, #0a2f1f, #031007);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 1.5rem;
+      position: relative;
+    }
+
+    /* efek menyala / neon glow pada body bagian luar */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      background: repeating-linear-gradient(
+        45deg,
+        rgba(0, 255, 100, 0.03) 0px,
+        rgba(0, 255, 100, 0.03) 2px,
+        transparent 2px,
+        transparent 8px
+      );
+      z-index: 0;
+    }
+
+    /* container utama dengan efek glow hijau */
+    .payment-container {
+      max-width: 580px;
+      width: 100%;
+      background: rgba(10, 30, 18, 0.75);
+      backdrop-filter: blur(12px);
+      border-radius: 3rem;
+      padding: 2rem 1.8rem;
+      box-shadow: 0 25px 45px rgba(0, 0, 0, 0.5), 0 0 0 2px rgba(50, 255, 120, 0.3), 0 0 25px #00ff7f80;
+      border: 1px solid #2eff9e;
+      transition: all 0.3s ease;
+      z-index: 2;
+      animation: borderPulse 2.2s infinite ease-in-out;
+    }
+
+    @keyframes borderPulse {
+      0% {
+        box-shadow: 0 0 0 0px rgba(70, 255, 120, 0.4), 0 0 20px #00ff7f;
+        border-color: #2eff9e;
+      }
+      50% {
+        box-shadow: 0 0 0 4px rgba(70, 255, 120, 0.6), 0 0 35px #5effb3;
+        border-color: #a0ffcc;
+      }
+      100% {
+        box-shadow: 0 0 0 0px rgba(70, 255, 120, 0.4), 0 0 20px #00ff7f;
+        border-color: #2eff9e;
+      }
+    }
+
+    /* header dengan kilau hijau */
+    .brand {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    .brand h1 {
+      font-size: 2.2rem;
+      letter-spacing: -0.5px;
+      background: linear-gradient(135deg, #baffc4, #4eff9e);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 0 8px #00ff99;
+      font-weight: 800;
+    }
+    .brand p {
+      color: #bef5d0;
+      text-shadow: 0 0 3px #1fa851;
+      font-weight: 500;
+      margin-top: 0.3rem;
+      font-size: 0.9rem;
+    }
+
+    /* style untuk tiap kartu metode */
+    .payment-method {
+      background: #071c11e0;
+      border-radius: 1.8rem;
+      margin-bottom: 1.5rem;
+      padding: 1rem 1.2rem;
+      transition: all 0.2s;
+      border-left: 6px solid #1eff8e;
+      backdrop-filter: blur(4px);
+      box-shadow: 0 5px 12px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(120, 255, 150, 0.3);
+    }
+
+    .method-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
+
+    .method-icon {
+      font-size: 2rem;
+      filter: drop-shadow(0 0 4px #17ff89);
+    }
+
+    .method-name {
+      font-size: 1.7rem;
+      font-weight: 800;
+      background: linear-gradient(120deg, #ccffdd, #6effb0);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      letter-spacing: 1px;
+    }
+
+    .detail-info {
+      background: #04200e66;
+      border-radius: 1.4rem;
+      padding: 0.8rem 1rem;
+      margin-top: 6px;
+      border: 1px solid #23d97c;
+    }
+
+    .info-row {
+      display: flex;
+      align-items: baseline;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      margin-bottom: 8px;
+      font-weight: 500;
+    }
+
+    .label {
+      color: #9effcb;
+      font-size: 0.85rem;
+      letter-spacing: 0.5px;
+      background: #0c331f60;
+      padding: 0.2rem 0.7rem;
+      border-radius: 50px;
+      display: inline-block;
+    }
+
+    .value {
+      color: #eafff0;
+      font-size: 1.1rem;
+      font-weight: 600;
+      font-family: monospace;
+      letter-spacing: 0.5px;
+      word-break: break-all;
+      text-align: right;
+      text-shadow: 0 0 2px #63ffa6;
+    }
+
+    .nama-value {
+      color: #d1ffdd;
+      font-weight: 600;
+      background: none;
+    }
+
+    .copy-btn {
+      background: #1f7a46c9;
+      border: none;
+      color: #e1ffec;
+      padding: 0.2rem 0.8rem;
+      border-radius: 40px;
+      font-size: 0.7rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.2s;
+      margin-left: 8px;
+      backdrop-filter: blur(4px);
+      box-shadow: 0 1px 3px #00000033;
+    }
+
+    .copy-btn:hover {
+      background: #45ff96;
+      color: #022010;
+      box-shadow: 0 0 6px #35ff85;
+    }
+
+    /* section qris khusus */
+    .qris-section {
+      background: linear-gradient(145deg, #022a13, #00190b);
+      border-radius: 2rem;
+      margin: 1.8rem 0 1rem;
+      padding: 1.3rem;
+      text-align: center;
+      border: 1px solid #48ffa3;
+      box-shadow: 0 0 16px #21ff88;
+    }
+
+    .qris-title {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #bbffd6;
+      margin-bottom: 1rem;
+    }
+
+    .qris-link-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      background: #0b2d1c;
+      padding: 0.8rem 1.6rem;
+      border-radius: 60px;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1.1rem;
+      color: #d9ffea;
+      border: 1px solid #81ffbc;
+      transition: 0.2s;
+      margin-top: 6px;
+    }
+
+    .qris-link-btn:hover {
+      background: #29cc73;
+      color: #001e0b;
+      box-shadow: 0 0 18px #46ff95;
+      transform: scale(1.02);
+    }
+
+    .qris-note {
+      font-size: 0.7rem;
+      color: #82e0b0;
+      margin-top: 12px;
+    }
+
+    /* footer dan instruksi */
+    .payment-note {
+      text-align: center;
+      margin-top: 28px;
+      background: #021a0d70;
+      padding: 0.8rem;
+      border-radius: 2rem;
+      font-size: 0.75rem;
+      color: #a1f7c7;
+      border-top: 1px solid #44f298;
+    }
+
+    button:active {
+      transform: scale(0.97);
+    }
+
+    /* responsif */
+    @media (max-width: 480px) {
+      .payment-container {
+        padding: 1.2rem;
+      }
+      .method-name {
+        font-size: 1.4rem;
+      }
+      .value {
+        font-size: 0.9rem;
+      }
+      .info-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+      }
+      .value {
+        text-align: left;
+      }
+      .copy-btn {
+        align-self: flex-start;
+        margin-left: 0;
+        margin-top: 5px;
+      }
+    }
+
+    /* efek pulse pada tombol salin */
+    .toast-msg {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #2eff90d9;
+      color: #021c0c;
+      font-weight: bold;
+      padding: 10px 20px;
+      border-radius: 40px;
+      backdrop-filter: blur(8px);
+      font-size: 0.8rem;
+      z-index: 999;
+      box-shadow: 0 0 15px #6effb3;
+      pointer-events: none;
+      transition: 0.2s;
+      opacity: 0;
+    }
+
+    .toast-msg.show {
+      opacity: 1;
+      animation: fadeUp 0.2s ease;
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0px);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="payment-container">
+    <div class="brand">
+      <h1>⚡ RIIWWXZ PAY ⚡</h1>
+      <p>Green Gateway • Instant Transfer • 24/7 Aman</p>
+    </div>
+
+    <!-- DANA -->
+    <div class="payment-method" id="method-dana">
+      <div class="method-header">
+        <span class="method-icon">💚📱</span>
+        <span class="method-name">DANA</span>
+      </div>
+      <div class="detail-info">
+        <div class="info-row">
+          <span class="label">📞 No. Rekening/DANA ID</span>
+          <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap; justify-content: flex-end;">
+            <span class="value" id="dana-number">082117455692</span>
+            <button class="copy-btn" data-copy="082117455692" data-label="DANA">Salin</button>
+          </div>
+        </div>
+        <div class="info-row">
+          <span class="label">👤 Nama Penerima</span>
+          <span class="value nama-value">DORI S****L H*D**I</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- GOPAY -->
+    <div class="payment-method" id="method-gopay">
+      <div class="method-header">
+        <span class="method-icon">💚🟢</span>
+        <span class="method-name">GOPAY</span>
+      </div>
+      <div class="detail-info">
+        <div class="info-row">
+          <span class="label">📱 No. GOPAY</span>
+          <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap; justify-content: flex-end;">
+            <span class="value" id="gopay-number">083825922898</span>
+            <button class="copy-btn" data-copy="083825922898" data-label="GOPAY">Salin</button>
+          </div>
+        </div>
+        <div class="info-row">
+          <span class="label">👤 Nama Penerima</span>
+          <span class="value nama-value">DORI S****L H*D**I</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- SEABANK -->
+    <div class="payment-method" id="method-seabank">
+      <div class="method-header">
+        <span class="method-icon">🏦💚</span>
+        <span class="method-name">SEABANK</span>
+      </div>
+      <div class="detail-info">
+        <div class="info-row">
+          <span class="label">🔢 No. Rekening</span>
+          <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap; justify-content: flex-end;">
+            <span class="value" id="seabank-number">901068812599</span>
+            <button class="copy-btn" data-copy="901068812599" data-label="SEABANK">Salin</button>
+          </div>
+        </div>
+        <div class="info-row">
+          <span class="label">👤 Nama Pemilik</span>
+          <span class="value nama-value">DORI S****L H*D**I</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- QRIS SECTION dengan link URL yang diberikan -->
+    <div class="qris-section">
+      <div class="qris-title">
+        <span>📲 QRIS • Bayar Cepat</span>
+        <span>✨</span>
+      </div>
+      <a href="https://linkqr.id/image/expkesez" target="_blank" rel="noopener noreferrer" class="qris-link-btn">
+        <span>🔗 Buka QRIS Image</span>
+        <span>➡️</span>
+      </a>
+      <p class="qris-note">*Klik tombol di atas untuk scan QRIS via Link Resmi • aman dan terverifikasi</p>
+      <!-- tambahan link agar mudah disalin juga opsional -->
+      <div style="margin-top: 12px;">
+        <button class="copy-btn" id="copyQrisLink" data-copy="https://linkqr.id/image/expkesez" data-label="QRIS Link" style="background:#117744; font-size:0.75rem;">📋 Salin Link QRIS</button>
+      </div>
+    </div>
+
+    <div class="payment-note">
+      ⚡ Sistem Hijau Menyala • Transfer sesuai nominal • Konfirmasi otomatis<br>
+      Pastikan data penerima sesuai: DORI S****L H*D**I untuk semua metode.
+    </div>
+  </div>
+
+  <!-- elemen untuk toast notifikasi -->
+  <div id="toastMessage" class="toast-msg">Tersalin!</div>
+
+  <script>
+    (function() {
+      // ambil semua tombol dengan class copy-btn
+      const copyButtons = document.querySelectorAll('.copy-btn');
+      const toast = document.getElementById('toastMessage');
+      
+      // fungsi untuk menampilkan toast notifikasi sementara
+      function showToast(message) {
+        toast.textContent = message || '✅ Berhasil disalin!';
+        toast.classList.add('show');
+        setTimeout(() => {
+          toast.classList.remove('show');
+        }, 1800);
+      }
+
+      // fungsi copy teks ke clipboard modern
+      async function copyToClipboard(text, label) {
+        try {
+          await navigator.clipboard.writeText(text);
+          showToast(`💚 ${label ? label + ' : ' : ''}${text} berhasil disalin!`);
+          // efek getar ringan pada tombol (opsional)
+          return true;
+        } catch (err) {
+          console.error('Gagal copy: ', err);
+          // fallback untuk keamanan lama
+          fallbackCopy(text, label);
+        }
+      }
+
+      function fallbackCopy(text, label) {
+        const textArea = document.createElement('textarea');
+        textArea.value = text;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+        showToast(`💚 ${label ? label + ' ' : ''}Disalin! (${text})`);
+      }
+
+      // event listener masing-masing tombol copy
+      copyButtons.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const copyValue = btn.getAttribute('data-copy');
+          const label = btn.getAttribute('data-label') || 'Nomer';
+          if (copyValue) {
+            copyToClipboard(copyValue, label);
+            // animasi kilat hijau pada tombol
+            btn.style.backgroundColor = '#b8ffd0';
+            btn.style.color = '#003d1f';
+            setTimeout(() => {
+              btn.style.backgroundColor = '';
+              btn.style.color = '';
+            }, 200);
+          }
+        });
+      });
+
+      // Menambahkan efek hover animasi pada kartu metode biar makin 'menyala'
+      const methods = document.querySelectorAll('.payment-method');
+      methods.forEach(method => {
+        method.addEventListener('mouseenter', () => {
+          method.style.transform = 'translateY(-3px)';
+          method.style.boxShadow = '0 12px 20px -8px rgba(0,255,100,0.4), inset 0 1px 1px rgba(110,255,150,0.5)';
+          method.style.transition = '0.2s';
+        });
+        method.addEventListener('mouseleave', () => {
+          method.style.transform = 'translateY(0px)';
+          method.style.boxShadow = '0 5px 12px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(120, 255, 150, 0.3)';
+        });
+      });
+
+      // efek kilau pada qris section 
+      const qrisBox = document.querySelector('.qris-section');
+      if (qrisBox) {
+        setInterval(() => {
+          qrisBox.style.boxShadow = '0 0 0 2px #71ffb3, 0 0 18px #29ff89';
+          setTimeout(() => {
+            if (qrisBox) qrisBox.style.boxShadow = '0 0 16px #21ff88';
+          }, 400);
+        }, 2000);
+      }
+
+      // validasi link QRIS juga bisa langsung dibuka, tapi kita tambah salin link sendiri
+      const copyQrisBtn = document.getElementById('copyQrisLink');
+      if (copyQrisBtn) {
+        // sudah terpasang data-copy di html
+        // kita tambah efek spesial agar lebih oke
+        copyQrisBtn.addEventListener('click', (e) => {
+          const linkQris = copyQrisBtn.getAttribute('data-copy');
+          if(linkQris) {
+            copyToClipboard(linkQris, 'QRIS URL');
+          }
+        });
+      }
+
+      // Efek glow pada container secara berkelanjutan (opsional)
+      let pulseToggle = false;
+      setInterval(() => {
+        const container = document.querySelector('.payment-container');
+        if (container) {
+          if (pulseToggle) {
+            container.style.boxShadow = '0 25px 45px rgba(0, 0, 0, 0.5), 0 0 0 2px rgba(70, 255, 150, 0.6), 0 0 32px #36ff98';
+          } else {
+            container.style.boxShadow = '0 25px 45px rgba(0, 0, 0, 0.5), 0 0 0 2px rgba(50, 255, 120, 0.3), 0 0 25px #00ff7f80';
+          }
+          pulseToggle = !pulseToggle;
+        }
+      }, 1400);
+    })();
+  </script>
+</body>
+</html>
